@@ -15,6 +15,8 @@ import Settings from "./pages/Settings";
 import Messages from "./pages/Messages";
 import PostJob from "./pages/PostJob";
 import NotFound from "./pages/NotFound";
+import ForgotPassword from "./pages/ForgotPassword";
+
 
 const queryClient = new QueryClient();
 
@@ -40,6 +42,7 @@ const App = () => (
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}\n              <Route path="/forgot" element={<ForgotPassword />} />\n              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset" element={<ResetPassword />} />
               <Route path="*" element={<NotFound />} />
+	      <Route path="/reset" element={<ForgotPassword />} />
             </Routes>
           </div>
         </BrowserRouter>

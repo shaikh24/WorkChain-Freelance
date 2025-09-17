@@ -12,7 +12,7 @@ const ForgotPassword = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -21,23 +21,25 @@ const ForgotPassword = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
+
       const data = await res.json();
+
       if (res.ok) {
-        toast({ title: "Email sent", description: data.message || "Check your email for reset token." });
-        // navigate to reset page (user may paste token there)
+        toast({ title: "Email sent", description: data.message || "Check your inbox" });
+        // Navigate to reset page (user may paste token there)
         navigate("/reset");
       } else {
-        toast({ title: "Error", description: data.message || "Something went wrong" });
+        toast({ title: "Error", description: data.message || "Something went wrong", variant: "destructive" });
       }
     } catch (err) {
-      toast({ title: "Error", description: "Network error" });
+      toast({ title: "Error", description: "Network error", variant: "destructive" });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-6">
+    <div className="flex items-center justify-center min-h-screen bg-background">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>Forgot Password</CardTitle>
@@ -45,10 +47,19 @@ const ForgotPassword = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <Label>Email</Label>
-              <Input value={email} onChange={(e)=>setEmail(e.target.value)} required />
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
-            <Button type="submit" disabled={loading}>{loading ? "Sending..." : "Send reset email"}</Button>
+            <Button type="submit" disabled={loading} className="w-full">
+              {loading ? "Sending..." : "Send Reset Link"}
+            </Button>
           </form>
         </CardContent>
       </Card>
