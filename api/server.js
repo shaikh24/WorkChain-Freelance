@@ -13,16 +13,21 @@ const gigsRoutes = require('./routes/gigs.routes');
 const walletRoutes = require('./routes/wallet.routes');
 const jobsRoutes = require('./routes/jobs.routes');
 
-\1 process.env.PORT || 5000;
+const app = express();
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
 app.use(helmet());
 app.set('trust proxy', 1);
-const limiter = rateLimit({ windowMs: 15*60*1000, max: 200 });
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
 app.use(limiter);
 
-const corsOrigin = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : ['*'];
+const corsOrigin = process.env.CORS_ORIGIN || "*";
 app.use(cors({ origin: corsOrigin, credentials: true }));
 
 // Connect DB
@@ -44,7 +49,7 @@ try {
 // Health check
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
-// Serve static only if public exists and SERVE_STATIC=true
+// Serve static if enabled
 if (process.env.SERVE_STATIC === 'true') {
   const publicPath = path.join(__dirname, 'public');
   if (fs.existsSync(publicPath)) {
@@ -55,30 +60,6 @@ if (process.env.SERVE_STATIC === 'true') {
   }
 }
 
-// Use http server for socket.io
-const http = require('http').createServer(app);
-const io = require('socket.io')(http, {
-  cors: { origin: corsOrigin, methods: ['GET','POST'] }
-});
-
-io.on('connection', (socket) => {
-  logger.info('Socket connected:', socket.id);
-
-  socket.on('join', ({ roomId }) => {
-    if (roomId) socket.join(roomId);
-  });
-
-  socket.on('message', (msg) => {
-    if (msg && msg.roomId) {
-      io.to(msg.roomId).emit('message', msg);
-    }
-  });
-
-  socket.on('offer', (data) => socket.to(data.to).emit('offer', data));
-  socket.on('answer', (data) => socket.to(data.to).emit('answer', data));
-  socket.on('ice-candidate', (data) => socket.to(data.to).emit('ice-candidate', data));
-});
-
-http.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
