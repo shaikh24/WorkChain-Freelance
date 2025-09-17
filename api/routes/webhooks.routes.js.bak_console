@@ -1,0 +1,9 @@
+const express = require('express');
+const router = express.Router();
+
+router.post('/pi', (req, res) => {
+  console.log('Received PI webhook:', req.body);
+  res.json({ status: 'ok' });
+});
+
+module.exports = router;

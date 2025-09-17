@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* WorkChain Pi Design System - Modern Freelance Marketplace with Pi Network Integration */
+
+@layer base {
+  :root {
+    /* Core Brand Colors - Purple to Cyan Gradient Theme */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Primary: Deep Purple (Pi Network inspired) */
+    --primary: 262 83% 58%;
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: 262 83% 65%;
+
+    /* Secondary: Darker background cards */
+    --secondary: 240 6% 10%;
+    --secondary-foreground: 0 0% 98%;
+
+    /* Muted: Subtle backgrounds */
+    --muted: 240 5% 6%;
+    --muted-foreground: 240 5% 64.9%;
+
+    /* Accent: Cyan highlights */
+    --accent: 188 95% 68%;
+    --accent-foreground: 240 10% 3.9%;
+
+    /* Status Colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 240 10% 3.9%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    /* UI Elements */
+    --border: 240 6% 20%;
+    --input: 240 6% 10%;
+    --ring: 262 83% 58%;
+
+    --radius: 0.75rem;
+
+    /* Custom Design System */
+    --gradient-primary: linear-gradient(135deg, hsl(262 83% 58%) 0%, hsl(188 95% 68%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(240 6% 10%) 0%, hsl(240 10% 3.9%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(188 95% 68%) 0%, hsl(262 83% 58%) 100%);
+    
+    --shadow-glow: 0 0 40px hsl(262 83% 58% / 0.3);
+    --shadow-card: 0 8px 32px hsl(240 10% 3.9% / 0.5);
+    --shadow-elevated: 0 16px 64px hsl(240 10% 3.9% / 0.7);
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Sidebar Variables */
+    --sidebar-background: 240 6% 10%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 262 83% 58%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 5% 6%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 6% 20%;
+    --sidebar-ring: 262 83% 58%;
+  }
+
+  .light {
+    /* Light mode overrides for the design system */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 262 83% 58%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 10% 3.9%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 188 95% 68%;
+    --accent-foreground: 240 10% 3.9%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 262 83% 58%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-secondary;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/50 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary;
+  }
+}
+
+@layer components {
+  /* Gradient Backgrounds */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+  
+  .gradient-accent {
+    background: var(--gradient-accent);
+  }
+
+  /* Glass Effect */
+  .glass {
+    @apply bg-card/80 backdrop-blur-md border border-border/50;
+  }
+
+  /* Glow Effects */
+  .glow-primary {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+
+  /* Smooth Transitions */
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+
+  /* Interactive Elements */
+  .interactive {
+    @apply transition-smooth hover:scale-105 active:scale-95;
+  }
+
+  /* Hover Glow */
+  .hover-glow:hover {
+    @apply glow-primary;
+  }
+
+  /* Text Gradients */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  /* Custom Button Variants */
+  .btn-hero {
+    @apply bg-gradient-to-r from-primary to-accent text-primary-foreground px-8 py-4 rounded-xl font-semibold transition-smooth hover:shadow-elevated hover:scale-105 active:scale-95;
+  }
+
+  .btn-glass {
+    @apply glass px-6 py-3 rounded-lg font-medium transition-smooth hover:bg-card/90 hover:border-primary/50;
+  }
+
+  /* Card Variants */
+  .card-glow {
+    @apply bg-card border border-border/50 shadow-card hover:shadow-elevated transition-smooth;
+  }
+
+  .card-interactive {
+    @apply card-glow hover:border-primary/50 hover:scale-[1.02] cursor-pointer;
+  }
+}
