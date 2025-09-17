@@ -16,7 +16,7 @@ import Messages from "./pages/Messages";
 import PostJob from "./pages/PostJob";
 import NotFound from "./pages/NotFound";
 import ForgotPassword from "./pages/ForgotPassword";
-
+import ResetPassword from "./pages/ResetPassword";
 
 const queryClient = new QueryClient();
 

@@ -14,7 +14,7 @@ const ResetPassword = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -23,22 +23,23 @@ const ResetPassword = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, token, password }),
       });
+
       const data = await res.json();
       if (res.ok) {
-        toast({ title: "Success", description: data.message || "Password updated" });
+        toast({ title: "Success", description: data.message || "Password reset successfully" });
         navigate("/login");
       } else {
-        toast({ title: "Error", description: data.message || "Invalid token or other error" });
+        toast({ title: "Error", description: data.message || "Invalid token or email", variant: "destructive" });
       }
     } catch (err) {
-      toast({ title: "Error", description: "Network error" });
+      toast({ title: "Error", description: "Network error", variant: "destructive" });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-6">
+    <div className="flex items-center justify-center min-h-screen bg-background">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>Reset Password</CardTitle>
@@ -47,17 +48,19 @@ const ResetPassword = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label>Email</Label>
-              <Input value={email} onChange={(e)=>setEmail(e.target.value)} required />
+              <Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" required />
             </div>
             <div>
               <Label>Reset Token</Label>
-              <Input value={token} onChange={(e)=>setToken(e.target.value)} required />
+              <Input value={token} onChange={(e) => setToken(e.target.value)} required />
             </div>
             <div>
               <Label>New Password</Label>
-              <Input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} required />
+              <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
-            <Button type="submit" disabled={loading}>{loading ? "Updating..." : "Update Password"}</Button>
+            <Button type="submit" disabled={loading}>
+              {loading ? "Updating..." : "Reset Password"}
+            </Button>
           </form>
         </CardContent>
       </Card>
