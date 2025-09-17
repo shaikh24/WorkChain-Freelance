@@ -1,0 +1,12 @@
+{
+  "name": "workchain-project",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd pi-work-link-main && npm install && npm run dev",
+    "build": "cd pi-work-link-main && npm install && npm run build",
+    "preview": "cd pi-work-link-main && npm install && npm run preview"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
